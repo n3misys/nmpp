@@ -1,0 +1,169 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <organization>
+        <name>N3 Micro-Systems</name>
+        <url>https://www.n3misys.de</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>sne</id>
+            <name>Sven Neufeind</name>
+            <email>developer@n3misys.de</email>
+            <roles>
+                <role>Lead</role>
+                <role>Committer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <parent>
+        <groupId>com.soebes.smpp</groupId>
+        <artifactId>smpp</artifactId>
+        <version>3.0.0</version>
+    </parent>
+
+    <name>Master-POM</name>
+    <description>Maven Parent POM for Projects of 'N3 Micro-Systems's</description>
+    <inceptionYear>2017</inceptionYear>
+    <url>https://github.com/n3misys/nmpp</url>
+
+    <groupId>de.n3misys</groupId>
+    <artifactId>nmpp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <scm>
+        <connection>scm:git:https://github.com/n3misys/nmpp.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/n3misys/nmpp.git</developerConnection>
+        <url>https://github.com/n3misys/nmpp</url>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/n3misys/nmpp/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Travis-CI</system>
+        <url>https://travis-ci.org/n3misys/nmpp</url>
+    </ciManagement>
+    <distributionManagement>
+        <repository>
+            <id>ossrh-staging</id>
+            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>ossrh-snapshots</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <site>
+            <id>site</id>
+            <url>https://github.com/n3misys/nmpp</url>
+        </site>
+    </distributionManagement>
+
+    <properties>
+        <project.build.javaVersion>1.8</project.build.javaVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>${project.build.javaVersion}</maven.compiler.source>
+        <maven.compiler.target>${project.build.javaVersion}</maven.compiler.target>
+
+        <thridparty.junit.version>4.12</thridparty.junit.version>
+        <thridparty.powermock.version>1.6.5</thridparty.powermock.version>
+        <thridparty.mockito.version>1.10.19</thridparty.mockito.version> <!-- ggf. Version 2.0 verwenden, derzeit noch in Beta -->
+
+        <maven.owasp-dependency-check.version>2.1.0</maven.owasp-dependency-check.version>
+        <maven.selenium-maven-plugin.version>2.3</maven.selenium-maven-plugin.version>
+    </properties>
+
+    <dependencies>
+        <!-- Testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${thridparty.junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${thridparty.mockito.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito</artifactId>
+                <version>${thridparty.powermock.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4</artifactId>
+                <version>${thridparty.powermock.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${project.build.javaVersion}</source>
+                        <target>${project.build.javaVersion}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>selenium-maven-plugin</artifactId>
+                    <version>${maven.selenium-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${maven.owasp-dependency-check.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>aggregate</goal>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
